@@ -1,0 +1,186 @@
+---
+title: "Gym Equipment Cleaning Project"
+author: "Ben Miller"
+date: "2023-10-11"
+output: 
+  html_document:
+    theme: cerulean
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+  
+
+
+---
+
+
+### Note 
+I have obtained permission from my boss to publish this data. To ensure anonymity, I replaced the various student names and emails from the original data set with 'NAME' and 'EMAIL.' The data is otherwise unchanged from the original project, other than the redacted student information.
+
+```{r}
+library(tidyverse)
+library(janitor)
+data <- read.csv("C:/Users/Ben/Downloads/Campus Rec/Equipment/MessyEquipData.csv") #import data
+```
+
+Wow, this data is incredibly messy. It'll need to be cleaned if I want to analyze it. 
+
+### Getting Organized
+
+The first three rows of the data frame are titles from the csv that are unnecessary for my analysis. In the below chunk of code I will remove those rows using the slice function. 
+
+```{r}
+n <- nrow(data) #calculates number of rows in data set
+clean_data <- data |> 
+  slice(4:n) #create a new data frame, clean_data, that only contains rows 4 through n 
+```
+
+Nice! I have removed the first three rows from the data frame. 
+
+The removed three rows came before our column names in the csv file. As a result, when I imported the csv into R, R imported the wrong column names. After removing those rows the first row of clean_data now contains the column names. Let's make that first row our columns using the row-to_names function from the janitor package. 
+
+```{r}
+clean_data <- clean_data |>
+  row_to_names(row_number = 1) #take the values from row #1 and make them columns
+head(clean_data) 
+```
+
+Let's rename the columns so they are easier to work with in R.
+
+```{r}
+clean_data <- clean_data |>
+  rename(CheckedOut = `Checked Out
+(User)`) 
+ 
+clean_data <- clean_data |>
+   rename(CheckedIn = `Checked In
+(User)`)
+```
+
+Nice! Next, I'll want to remove the 'Due Date' and 'Overdue' columns from the data set, as I don't really care about those in my future analysis. 
+
+```{r}
+clean_data <- clean_data |>
+  select(Customer,CheckedOut,CheckedIn)
+head(clean_data)
+```
+
+I'm noticing that rows with blank values in the 'Customer' column contain irrelevant information in other columns. I should remove rows from the data frame where the 'Customer' column does not have a value. 
+
+```{r}
+clean_data <- clean_data |> 
+  filter(Customer != "")
+head(clean_data)
+```
+
+### First Loop
+
+Some rows in the data frame have irrelevant values in the 'Customer' column but no values in the 'CheckedOut' and 'CheckedIn' columns. Among these rows, I need to remove those with 'Customer' values like 'Category: Recreational Equipment' and 'Equipment: NAME OF UNIQUE EQUIPMENT.', as they do not contain relevant information. 
+
+However, I can't filter out rows solely based on empty 'CheckedIn' or 'CheckedOut' columns because some rows with missing 'CheckedIn' or 'CheckedOut' data still contain important 'Customer' information. 
+Another issue is that future data will contain dozens of unique values for "Equipment:NAME OF UNIQUE EQUIPMENT", meaning that filtering by every unique "Equipment:NAME OF UNIQUE EQUIPMENT" value will be inefficient and potentially not reproducible. 
+
+Given these constraints, I came up with a solution that I believe is both efficient and reproducible for new data. I first use a for loop to identify rows where 'Customer' values start with 'Equipment:'. I then create a temporary column called 'Remove' with a value of 1 for such rows. After that, I filter out rows with a 'Remove' column value of 1. Finally, I remove the 'Remove' column. 
+
+
+```{r}
+clean_data <- clean_data |>
+  filter(Customer != "Category: Recreational Equipment")  
+
+for(i in 1:nrow(clean_data)){
+  equipment_vector <- startsWith(clean_data$Customer,"Equipment:")
+} #This for loop iterates through every row in clean_data to create a logical vector indicating which rows have 'Customer' values starting with 'Equipment:'.
+
+clean_data$Remove <- ifelse(equipment_vector == "TRUE",1,0) #This line adds a 'Remove' column in 'clean_data.' It assigns a value of 1 if the corresponding 'equipment_vector' element is "TRUE," otherwise 0. 
+
+clean_data <- clean_data |>
+  filter(Remove != 1) #filters out rows that have 'Remove' values of 1
+
+clean_data$Remove <- NULL #removes the 'Remove' column
+head(clean_data)
+```
+
+### Second Loop 
+
+Nice! Now is what I found to be the most challenging part of this project...
+
+In the clean_data data frame, the 'Customer' column now contains both item names and the names of individuals who checked them out. As you can see by looking at the messy csv, what is now the 'Customer' column follows a pattern where each item, such as 'Item: AB1,' is followed by the names of the individuals who rented it. My goal is to remove the individual names and retain only the item names in a new 'Item' column, effectively restructuring the data frame for analysis.
+
+To achieve this, I created an object, named 'cur_item,' by extracting the first value from the 'Customer' column in clean_data. (At this point, the first value would be the first 'Item:NAME OF ITEM' in the data frame). Then, I made a for loop to iterate through each row in clean_data and check whether the 'Customer' column value in the current row starts with "Item:". If it does, 'cur_item' is updated with the value from that row, effectively tracking the current item as the loop progresses through the data frame. Lastly, it populates the 'Item' column with the 'cur_item' value for each corresponding row.
+
+In summary, the below code runs through each row of clean_data, detects item names in the 'Customer' column, and then transfers these item names to corresponding rows in the new 'Item' column. 
+
+```{r}
+clean_data$Item <- NA #Create Item column. Each value is NA for now
+
+clean_data <- clean_data |>
+  relocate(Item, .after = Customer) #move around columns for aesthetic purposes
+
+cur_item <- clean_data$Customer[1] 
+for(i in 1:nrow(clean_data)){ 
+  if(startsWith(clean_data$Customer[i],"Item:")){ #if we reach a new item name
+  cur_item <- clean_data$Customer[i] #then replace value of 'cur_item' with the name of that new item
+  }
+  clean_data$Item[i] <- cur_item #then put the value of cur_item in each row of the new 'Item' column 
+}
+
+clean_data$Item <- gsub("Item: ","",clean_data$Item) #I don't want each value in the 'Item' column to start with 'Item:'
+
+#Syntax for line 110 is gsub("The text you want to remove","replace it with this","where are you doing this at?")
+
+clean_data$Customer <- NULL #Eliminates the customer row
+
+
+clean_data <- clean_data |>
+  filter(CheckedOut != "") #blank rows were headers in the csv, so no need for them for analysis. This line removes those. 
+head(clean_data)
+```
+
+Nice! Now I have a much cleaner data frame.
+
+### Cleaning Up Date and Time
+
+I've noticed that the 'CheckedOut' and 'CheckedIn' columns contain information on the date, day of week, and time each item was checked out and in. This is all important information, but I think splitting this information up into several columns would be more suitable for later analysis. 
+
+```{r}
+#I don't think I can use the lubridate package because the csv stored the dates and times in an unorthodox way. I'll have to be a bit creative. 
+
+clean_data <- separate(clean_data, CheckedOut, c("Day","Date","Time"), sep = ",") #Separates the values in the 'CheckedOut' column by a comma and stores the resulting components in new columns named 'Day', 'Date', and 'Time'. 
+
+clean_data <- clean_data |>
+  relocate(Day, .before = Item) |> #relocates columns for aesthetic purposes
+  relocate(Date, .before = Day)
+
+clean_data$Time <- gsub(" 2023","",clean_data$Time) #removes '2023' text from the 'Time' column. Year info isn't needed, as we only have data from the last two years.
+
+clean_data <- clean_data |>
+  rename("Time Checked Out" = "Time") #Renamed column
+head(clean_data)
+```
+
+Now I need to do the same process for the 'CheckedIn' column, although I only need information on the time that the item was checked backed in as date and day of week now have columns. 
+
+```{r}
+clean_data <- separate(clean_data, CheckedIn, c("NULL","NULL1","Time Checked In"), sep = ",") #same as above. Null and null1 will be removed below. 
+
+clean_data$`NULL`<- NULL
+clean_data$NULL1 <- NULL
+clean_data$`Time Checked In` <- gsub(" 2023","",clean_data$`Time Checked In`) #remove 2023 text... same as above
+head(clean_data)
+```
+
+### End Result
+
+The data frame is now clean and suitable for analysis! For a final comparison, the original, "messy", data frame and the final, "clean", data frame are below.
+
+To view the cleaned data frame on GitHub, simply open the CleanedEquipData.csv file in the project's repository.
+
+```{r}
+head(data,n=20)
+```
+
+```{r}
+head(clean_data,n=20)
+```
+
+Having a clean data frame will allow me to preform previously impossible quantitative analysis on gym equipment rental. For example, this data set will allow us to optimize our basketball open recreation hours. Previously, we relied on anecdotal evidence to set these hours, but now, with clean data, we can accurately determine the peak days and hours that basketballs are checked out. With that knowledge we will be able to line up open recreation hours with peak hours and days, thus maximizing gym efficiency. 
