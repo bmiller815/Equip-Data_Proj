@@ -57,7 +57,7 @@ clean_data <- clean_data |>
 (User)`)
 ```
 
-Nice! Next, I'll want to remove the 'Due Date' and 'Overdue' columns from the data set, as I don't really care about those in my future analysis. 
+Next, I'll want to remove the 'Due Date' and 'Overdue' columns from the data set, as I don't really care about those in my future analysis. 
 
 ```{r}
 clean_data <- clean_data |>
@@ -102,7 +102,7 @@ head(clean_data)
 
 ### Second Loop 
 
-Nice! Now is what I found to be the most challenging part of this project...
+Now is what I found to be the most challenging part of this project...
 
 In the clean_data data frame, the 'Customer' column now contains both item names and the names of individuals who checked them out. As you can see by looking at the messy csv, what is now the 'Customer' column follows a pattern where each item, such as 'Item: AB1,' is followed by the names of the individuals who rented it. My goal is to remove the individual names and retain only the item names in a new 'Item' column, effectively restructuring the data frame for analysis.
 
@@ -183,4 +183,4 @@ head(data,n=20)
 head(clean_data,n=20)
 ```
 
-Having a clean data frame will allow me to preform previously impossible quantitative analysis on gym equipment rental. For example, this data set will allow us to optimize our basketball open recreation hours. Previously, we relied on anecdotal evidence to set these hours, but now, with clean data, we can accurately determine the peak days and hours that basketballs are checked out. With that knowledge we will be able to line up open recreation hours with peak hours and days, thus maximizing gym efficiency. 
+Having a clean data frame will allow me to perform previously impossible quantitative analysis on gym equipment rental. For example, this data set will allow us to optimize our basketball open recreation hours. Previously, we relied on anecdotal evidence to set these hours, but now, with clean data, we can accurately determine the peak days and hours that basketballs are checked out. With that knowledge we will be able to line up open recreation hours with peak hours and days, thus maximizing gym efficiency. 
