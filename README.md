@@ -7,7 +7,7 @@ I am an Operations and Analytics Specialist at the Wake Forest Wellbeing Center.
 A specific example of this dynamic was the Wellbeing Center’s gym equipment rental data. The chaotic nature of the data output significantly impeded the staff's capacity to quantitatively analyze rental patterns. In response to this challenge, I took on the responsibility of developing efficient and reproducible code to clean almost two years worth of equipment rental data.  
 
 
-Issues with data 
+# Issues with data 
 
 Incorrectly Imported Columns: The initial data import included columns that were incorrectly placed, adding unnecessary complexity to the dataset.
 
@@ -19,14 +19,14 @@ Messy Date and Time Information: The date, time, and day of week data for each r
 
 Inadequate Item Tracking: The most critical issue was the lack of a dedicated column for tracking what item was checked out. Instead, item names were combined with other information in a single column, making it challenging to isolate the necessary details. Specifically, the item name was followed by the names of the individuals who rented it, often with irrelevant information in between, all within a single column. An item column was needed to enable analysis. 
 
-Solutions
+# Solutions
 
 I used both tidyverse and base R functions to systematically clean the data, ensuring that it was in a more usable and structured format. In addition, I applied two distinct for loops as part of the data cleaning process. The first for loop was instrumental in eliminating irrelevant rows, effectively decluttering the dataset and leaving only pertinent information for analysis. The second for loop was used to address the item tracking challenge, greatly increasing the analytical power of the data frame. The specifics of the two loops can be found in my script. 
 
-End result and benefit
+# End result and benefit
 
 The end result of this project was the successful transformation of messy gym rental equipment data into a clean data frame. Having a clean data frame will allow previously impossible quantitative analysis on gym equipment rental to be performed. For example, this data set will allow us to optimize our basketball open recreation hours. Previously, we relied on anecdotal evidence to set these hours, but now, with clean data, we can accurately determine the peak days and hours that basketballs are checked out. With that knowledge we will be able to line up open recreation hours with peak hours and days, thus maximizing gym efficiency.
 
-Note
+# Note
 
 I have received clearance from my supervisor to publish this sample data. It's important to note two minor distinctions between the sample data provided for the public version of this project and the actual dataset. To maintain transparency, I'll outline these differences. The sample data frame included here covers a two-week period, while the original project encompassed almost two years of data. Furthermore, the original dataset contained student names and emails. To ensure anonymity, I replaced the various student names and emails from the original data set with ‘NAME’ and ‘EMAIL.’ Apart from these modifications, the data remains consistent with the original project, albeit shorter in duration and with redacted student information.
