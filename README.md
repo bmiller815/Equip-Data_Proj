@@ -10,9 +10,13 @@ A specific example of this dynamic was the Wellbeing Center’s gym equipment re
 Issues with data 
 
 Incorrectly Imported Columns: The initial data import included columns that were incorrectly placed, adding unnecessary complexity to the dataset.
+
 Irrelevant Rows: Many rows contained information that was irrelevant to the analysis, cluttering the dataset. 
+
 Extraneous Columns: Several columns were extraneous, further complicating the data structure.
+
 Messy Date and Time Information: The date, time, and day of week data for each rental were contained together when having those data points in separate columns would have facilitated easier analysis. 
+
 Inadequate Item Tracking: The most critical issue was the lack of a dedicated column for tracking what item was checked out. Instead, item names were combined with other information in a single column, making it challenging to isolate the necessary details. Specifically, the item name was followed by the names of the individuals who rented it, often with irrelevant information in between, all within a single column. An item column was needed to enable analysis. 
 
 Solution
