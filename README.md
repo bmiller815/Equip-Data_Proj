@@ -19,7 +19,7 @@ Messy Date and Time Information: The date, time, and day of week data for each r
 
 Inadequate Item Tracking: The most critical issue was the lack of a dedicated column for tracking what item was checked out. Instead, item names were combined with other information in a single column, making it challenging to isolate the necessary details. Specifically, the item name was followed by the names of the individuals who rented it, often with irrelevant information in between, all within a single column. An item column was needed to enable analysis. 
 
-Solution
+Solutions
 
 I used both tidyverse and base R functions to systematically clean the data, ensuring that it was in a more usable and structured format. In addition, I applied two distinct for loops as part of the data cleaning process. The first for loop was instrumental in eliminating irrelevant rows, effectively decluttering the dataset and leaving only pertinent information for analysis. The second for loop was used to address the item tracking challenge, greatly increasing the analytical power of the data frame. The specifics of the two loops can be found in my script. 
 
