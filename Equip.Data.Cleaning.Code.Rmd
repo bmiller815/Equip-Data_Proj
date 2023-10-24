@@ -15,7 +15,7 @@ output:
 
 
 ### Note 
-I have obtained permission from my boss to publish this data. To ensure anonymity, I replaced the various student names and emails from the original data set with 'NAME' and 'EMAIL.' The data is otherwise unchanged from the original project, other than the redacted student information.
+I have obtained permission from my boss to publish this sample data. To ensure anonymity, I replaced the various student names and emails from the original data set with 'NAME' and 'EMAIL.' 
 
 ```{r}
 library(tidyverse)
