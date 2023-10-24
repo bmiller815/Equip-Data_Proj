@@ -26,3 +26,7 @@ I used both tidyverse and base R functions to systematically clean the data, ens
 End result and benefit
 
 The end result of this project was the successful transformation of messy gym rental equipment data into a clean data frame. Having a clean data frame will allow previously impossible quantitative analysis on gym equipment rental to be performed. For example, this data set will allow us to optimize our basketball open recreation hours. Previously, we relied on anecdotal evidence to set these hours, but now, with clean data, we can accurately determine the peak days and hours that basketballs are checked out. With that knowledge we will be able to line up open recreation hours with peak hours and days, thus maximizing gym efficiency.
+
+Note
+
+I have received clearance from my supervisor to publish this sample data. It's important to note two minor distinctions between the sample data provided for the public version of this project and the actual dataset. To maintain transparency, I'll outline these differences. The sample data frame included here covers a two-week period, while the original project encompassed almost two years of data. Furthermore, the original dataset contained student names and emails. To ensure anonymity, I replaced the various student names and emails from the original data set with ‘NAME’ and ‘EMAIL.’ Apart from these modifications, the data remains consistent with the original project, albeit shorter in duration and with redacted student information.
