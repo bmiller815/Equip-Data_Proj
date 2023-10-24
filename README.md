@@ -1,6 +1,6 @@
 # Equip-Data_Proj
 
-Context for project 
+# Context for project 
 
 I am an Operations and Analytics Specialist at the Wake Forest Wellbeing Center. At the Wellbeing Center we rely on a third-party system to track a variety of data. While this system is effective at capturing the necessary information, it falls short when it comes to data output. The data we receive from this system is typically in the form of poorly formatted and extremely messy CSV files. This presents a significant challenge  when it comes to performing statistical analysis on larger data sets. As a result, the Wellbeing Center has access to a wealth of data that it is largely unable to gain meaningful insights from. 
 
