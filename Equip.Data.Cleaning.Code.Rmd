@@ -23,7 +23,7 @@ library(janitor)
 data <- read.csv("C:/Users/Ben/Downloads/Campus Rec/Equipment/MessyEquipData.csv") #import data
 ```
 
-Wow, this data is incredibly messy. It'll need to be cleaned if I want to analyze it. 
+This data is incredibly messy. It'll need to be cleaned if I want to analyze it. 
 
 ### Getting Organized
 
