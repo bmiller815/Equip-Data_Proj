@@ -2,7 +2,7 @@
 
 # Context for project 
 
-I am an Operations Specialist at the Wake Forest Wellbeing Center. At the Wellbeing Center we rely on a third-party system to track a variety of data. While this system is effective at capturing the necessary information, it falls short when it comes to data output. The data we receive from this system is typically in the form of poorly formatted and extremely messy CSV files. This presents a significant challenge  when it comes to performing statistical analysis on larger data sets. As a result, the Wellbeing Center has access to a wealth of data that it is largely unable to gain meaningful quantitative insights from. 
+I am an operations specialist at the Wake Forest Wellbeing Center. At the Wellbeing Center we rely on a third-party system to track a variety of data. While this system is effective at capturing the necessary information, it falls short when it comes to data output. The data we receive from this system is typically in the form of poorly formatted and extremely messy CSV files. This presents a significant challenge  when it comes to performing statistical analysis on larger data sets. As a result, the Wellbeing Center has access to a wealth of data that it is largely unable to gain meaningful quantitative insights from. 
 
 A specific example of this dynamic was the Wellbeing Center’s gym equipment rental data. The chaotic nature of the data output significantly impeded the staff's capacity to quantitatively analyze rental patterns. In response to this challenge, I took on the responsibility of developing efficient and reproducible code to clean almost two years worth of equipment rental data.  
 
